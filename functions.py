@@ -314,6 +314,68 @@ def check_vals(n, vals, gg=0):
             ask_for_choise(gg)
 
 
+def print_tenzor(tenzor):
+    comp = tenzor['comp']
+    vals = tenzor['vals']
+    print(f"Tензор содержит следующие компоненты: {comp} ")
+    print(f"Значения тензора:")
+    if len(comp) == 1:
+        for i in range(0, dim):
+            while (len(str(vals[i])) < 3):
+                vals[i] = str(vals[i]) + " "
+        print(f"   [{vals[0]}, {vals[1]}, {vals[2]}]")
+    if len(comp) == 2:
+        for i in range(0, dim):
+            for j in range(0, dim):
+                while (len(str(vals[i][j])) < 3):
+                    vals[i][j] = str(vals[i][j]) + " "
+        for i in range(0, dim):
+            if i == 0:
+                print(f"  「 {vals[i][0]}, {vals[i][1]}, {vals[i][2]} ⎤")
+            elif i == 1:
+                print(f"   | {vals[i][0]}, {vals[i][1]}, {vals[i][2]}|")
+            if i == 2:
+                print(f"   ⎣ {vals[i][0]}, {vals[i][1]}, {vals[i][2]} ⎦ ")
+    if len(comp) == 3:
+        for i in range(0, dim):
+            for j in range(0, dim):
+                for k in range(0, dim):
+                    while (len(str(vals[i][j][k])) < 3):
+                        vals[i][j][k] = str(vals[i][j][k]) + " "
+        for i in range(0, dim):
+            row = ""
+            for j in range(0, dim):
+                row += f"{vals[i][j][0]}, {vals[i][j][1]}, {vals[i][j][2]}, "
+            row = row[:-2]
+            if i == 0:
+                print(f"   ⎡ {row} ⎤")
+            elif i == 1:
+                print(f"   | {row}|")
+            elif i == 2:
+                print(f"   ⎣ {row} ⎦")
+    if len(comp) == 4:
+        for i in range(0, dim):
+            for j in range(0, dim):
+                for k in range(0, dim):
+                    for l in range(0, dim):
+                        while (len(str(vals[i][j][k][l])) < 3):
+                            vals[i][j][k][l] = str(vals[i][j][k][l]) + " "
+        for j in range(0, dim):
+            for i in range(0, dim):
+                row = ""
+                for j in range(0, dim):
+                    row += f"{vals[i][j][0]}, {vals[i][j][1]}, {vals[i][j][2]}, "
+                row = row[:-2]
+            if (i == 0) and (j == 0):
+                print(f"   ⎡ {row} ⎤")
+            elif (i == 2) and (j == 2):
+                print(f"   ⎣ {row} ⎦")
+            else:
+                print(f"   | {row} |")
+
+
+
+
 
 
 
@@ -335,10 +397,12 @@ def ask_for_choise(gg=0):
             Bk_vals = check_vals(1, Bk_vals, 1)
             Bk_comps = ['k']
             Bk = {'comp': Bk_comps, 'vals': Bk_vals}
-            print(f"Ответ: {t_mult(Aij, Bk)}")
+            print(f"Ответ:")
+            print_tenzor(t_mult(Aij, Bk))
             ask_for_choise()
         elif conf == 'N':
-            print(f"Ответ: {t_mult(input_data.Aij, input_data.Bk)}")
+            print(f"Ответ:")
+            print_tenzor(t_mult(input_data.Aij, input_data.Bk))
             ask_for_choise()
         else:
             ask_for_choise(1)
@@ -364,12 +428,14 @@ def ask_for_choise(gg=0):
             Bl_comps = ['l']
             Bl = {'comp': Bl_comps, 'vals': Bl_vals}
             second_part = t_mult(Akl, Bl)
-            print(f"Ответ: {t_sum(first_part, second_part)}")
+            print(f"Ответ:")
+            print_tenzor(t_sum(first_part, second_part))
             ask_for_choise()
         elif conf == 'N':
             first_part = t_mult(input_data.Aij, input_data.bj)
             second_part = t_mult(input_data.Akl, input_data.bl)
-            print(f"Ответ: {t_sum(first_part, second_part)}")
+            print(f"Ответ:")
+            print_tenzor(t_sum(first_part, second_part))
             ask_for_choise()
         else:
             ask_for_choise(2)
@@ -381,10 +447,12 @@ def ask_for_choise(gg=0):
             Tljl_vals = check_vals(3, Tljl_vals, 3)
             Tljl_comps = ['l', 'j', 'l']
             Tljl = {'comp': Tljl_comps, 'vals': Tljl_vals}
-            print(f"Ответ: {t_svertka(Tljl)}")
+            print(f"Ответ:")
+            print_tenzor(t_svertka(Tljl))
             ask_for_choise()
         elif conf == 'N':
-            print(f"Ответ: {t_svertka(input_data.Tljl)}")
+            print(f"Ответ:")
+            print_tenzor(t_svertka(input_data.Tljl))
             ask_for_choise()
         else:
             ask_for_choise(3)
@@ -411,13 +479,15 @@ def ask_for_choise(gg=0):
             Bk_comps = ['j']
             Bk = {'comp': Bk_comps, 'vals': Bk_vals}
             second_part = t_mult(sf, Bk)
-            print(f"Ответ: {t_sum(first_part, second_part)}")
+            print(f"Ответ:")
+            print_tenzor(t_sum(first_part, second_part))
             ask_for_choise()
         elif conf == 'N':
             first_part = t_mult(input_data.Ajkl, input_data.Bjl)
             sf = t_mult(input_data.eps, input_data.aj)
             second_part = t_mult(sf, input_data.bk)
-            print(f"Ответ: {t_sum(first_part, second_part)}")
+            print(f"Ответ:")
+            print_tenzor(t_sum(first_part, second_part))
             ask_for_choise()
         else:
             ask_for_choise(4)
